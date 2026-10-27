@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10111f">
+  <title>TreeLib | Smart Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#dashboard" data-view="dashboard" aria-label="TreeLib dashboard">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M16 27V15m0 5-6-5m6 2 6-6M16 17l-2-7m2 17h-5m5 0h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="10" cy="12" r="4" fill="currentColor"/><circle cx="22" cy="10" r="4" fill="currentColor"/><circle cx="14" cy="7" r="4" fill="currentColor"/></svg>
+        </span>
+        <span>Tree<span class="brand-accent">Lib</span><small>SMART LIBRARY</small></span>
+      </a>
+      <p class="nav-caption">WORKSPACE</p>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#dashboard" data-view="dashboard"><span class="nav-icon">⌂</span>Dashboard</a>
+        <a class="nav-link" href="#books" data-view="books"><span class="nav-icon">▤</span>Books</a>
+        <a class="nav-link" href="#visualizer" data-view="visualizer"><span class="nav-icon">⌘</span>BST Visualizer</a>
+        <a class="nav-link" href="#search-lab" data-view="search-lab"><span class="nav-icon">⌕</span>Search Lab</a>
+        <a class="nav-link" href="#analytics" data-view="analytics"><span class="nav-icon">▥</span>Analytics</a>
+        <a class="nav-link" href="#about" data-view="about"><span class="nav-icon">ⓘ</span>About Project</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="course-card">
+          <span class="course-icon">✦</span>
+          <strong>Learning mode</strong>
+          <p>Explore data structures while managing your collection.</p>
+          <a href="#about" data-view="about">Explore concepts <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="profile-row"><span class="avatar">TL</span><span><strong>Library Admin</strong><small>Local workspace</small></span><span class="online-dot" aria-label="Online"></span></div>
+      </div>
+    </aside>
+
+    <div class="content-shell">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <div class="breadcrumb"><span>Workspace</span><span aria-hidden="true">/</span><strong id="pageTitle">Dashboard</strong></div>
+        <div class="topbar-actions">
+          <span class="system-status"><i></i>System operational</span>
+          <button class="icon-button" id="themeToggle" aria-label="Switch to light theme" title="Toggle light and dark theme">☼</button>
+          <button class="button button-demo" id="demoToggle" aria-pressed="false"><span aria-hidden="true">▷</span> Try demo</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <section class="view-section active" id="dashboard" data-title="Dashboard">
+          <div class="welcome-row">
+            <div><p class="eyebrow">LIBRARY OVERVIEW</p><h1>Your library, <span>in balance.</span></h1><p class="page-subtitle">A clear view of your collection and its Binary Search Tree.</p></div>
+            <button class="button button-primary" data-open-add><span aria-hidden="true">＋</span> Add a book</button>
+          </div>
+          <div class="demo-banner" id="demoBanner" hidden><span>✦</span><div><strong>Sample demo is active</strong><small>Browsing sample books. Your saved library is unchanged.</small></div><button id="exitDemo" class="text-button">Return to my library</button></div>
+          <div class="stat-grid" aria-live="polite">
+            <article class="stat-card"><div class="stat-top"><span>Total books</span><span class="stat-icon violet">▤</span></div><strong id="totalStat">—</strong><small>In your collection</small><span class="stat-orb"></span></article>
+            <article class="stat-card"><div class="stat-top"><span>Available</span><span class="stat-icon mint">✓</span></div><strong id="availableStat">—</strong><small>Ready to borrow</small><span class="stat-orb mint-orb"></span></article>
+            <article class="stat-card"><div class="stat-top"><span>Currently issued</span><span class="stat-icon amber">↗</span></div><strong id="issuedStat">—</strong><small>Checked out</small><span class="stat-orb amber-orb"></span></article>
+            <article class="stat-card"><div class="stat-top"><span>Categories</span><span class="stat-icon blue">◈</span></div><strong id="categoryStat">—</strong><small>Across your library</small><span class="stat-orb blue-orb"></span></article>
+          </div>
+          <div class="innovation-grid">
+            <article class="panel growth-panel" id="catalogGrowth">
+              <div class="growth-art" aria-hidden="true"><span>100</span><i></i><i></i><i></i></div>
+              <div class="growth-copy"><p class="eyebrow">COLLECTION BOOST</p><h2>Grow your library in one click.</h2><p id="growthMessage">Add illustrative sample titles across 24 categories. Your existing books stay safe.</p><button class="button button-primary" id="seedCatalog">＋ Expand to 100 books</button></div>
+            </article>
+            <article class="panel discovery-panel">
+              <div class="panel-heading"><div><p class="eyebrow">SMART DISCOVERY</p><h2>Find a new shelf to explore</h2></div><button class="button button-secondary" id="discoverNext">↻ Surprise me</button></div>
+              <p class="helper-copy">Picks available books from your least-represented categories. Recommendations are based on your actual collection.</p>
+              <div class="discovery-grid" id="discoveryGrid" aria-live="polite"></div>
+            </article>
+          </div>
+          <div class="dashboard-grid">
+            <article class="panel chart-panel"><div class="panel-heading"><div><p class="eyebrow">COLLECTION MIX</p><h2>Books by category</h2></div><span class="live-label"><i></i> LIVE DATA</span></div><div class="chart-box"><canvas id="categoryChart" aria-label="Books by category chart"></canvas><p class="chart-empty" id="categoryEmpty" hidden>No category data yet. Add a book to see the chart.</p></div></article>
+            <article class="panel chart-panel"><div class="panel-heading"><div><p class="eyebrow">BORROWING STATUS</p><h2>Availability</h2></div><span class="panel-icon">◒</span></div><div class="chart-box doughnut-box"><canvas id="availabilityChart" aria-label="Available and issued books chart"></canvas><p class="chart-empty" id="availabilityEmpty" hidden>Add books to see availability.</p></div></article>
+            <article class="panel activity-panel"><div class="panel-heading"><div><p class="eyebrow">LATEST UPDATES</p><h2>Recent activity</h2></div><a href="#books" data-view="books" class="subtle-link">Manage books <span aria-hidden="true">→</span></a></div><div id="activityList" class="activity-list"></div></article>
+          </div>
+        </section>
+
+        <section class="view-section" id="books" data-title="Books">
+          <div class="welcome-row"><div><p class="eyebrow">COLLECTION</p><h1>Book <span>management.</span></h1><p class="page-subtitle">Add, update, find, issue, and return books from your SQLite library.</p></div><button class="button button-primary" data-open-add>＋ Add a book</button></div>
+          <article class="panel library-panel">
+            <div class="panel-heading"><div><p class="eyebrow">YOUR COLLECTION</p><h2>Library catalog</h2></div><span class="pill" id="bookCountLabel">0 books</span></div>
+            <div class="filter-row">
+              <label class="search-control"><span aria-hidden="true">⌕</span><input id="bookFilter" type="search" placeholder="Search title, author or ID" aria-label="Search title, author or ID"></label>
+              <label class="select-control"><span class="sr-only">Filter by category</span><select id="categoryFilter"><option value="">All categories</option></select></label>
+              <label class="select-control"><span class="sr-only">Filter by availability</span><select id="availabilityFilter"><option value="all">Any status</option><option value="available">Available</option><option value="issued">Issued</option></select></label>
+              <label class="select-control"><span class="sr-only">Sort books</span><select id="sortFilter"><option value="title">Sort: title</option><option value="author">Sort: author</option><option value="id">Sort: ID</option></select></label>
+            </div>
+            <div class="table-wrap"><table><thead><tr><th>BOOK</th><th>AUTHOR</th><th>CATEGORY</th><th>STATUS</th><th class="actions-heading">ACTIONS</th></tr></thead><tbody id="bookRows"></tbody></table></div>
+            <div class="table-footer"><span id="resultsLabel" aria-live="polite"></span><div class="pagination"><button class="icon-button" id="prevPage" aria-label="Previous page">‹</button><span id="pageLabel">1 / 1</span><button class="icon-button" id="nextPage" aria-label="Next page">›</button></div></div>
+          </article>
+        </section>
+
+        <section class="view-section" id="visualizer" data-title="BST Visualizer">
+          <div class="welcome-row"><div><p class="eyebrow">DATA STRUCTURE LAB · CO4</p><h1>See the tree <span>take shape.</span></h1><p class="page-subtitle">Each node is inserted in database ID order. Smaller titles go left; larger titles go right.</p></div><button class="button button-secondary" id="rebuildTree">↻ Rebuild from library</button></div>
+          <div class="metric-strip"><div><span>Root node</span><strong id="rootMetric">—</strong></div><div><span>Tree height</span><strong id="heightMetric">0</strong><small>levels</small></div><div><span>Node count</span><strong id="nodeMetric">0</strong></div><div><span>Leaf nodes</span><strong id="leafMetric">0</strong></div></div>
+          <article class="panel tree-panel"><div class="panel-heading"><div><p class="eyebrow">INSERT · SEARCH · DELETE</p><h2>Interactive BST</h2></div><span class="pill violet-pill" id="treeSource">DATABASE TREE</span></div>
+            <p class="helper-copy">Live tree shape follows actual insertion order (book ID), not a sorted display. Lab inserts and deletes below change this temporary view only; rebuild to restore the saved database tree.</p>
+            <div class="lab-controls"><label>Book title<input id="labTitle" maxlength="160" placeholder="e.g. Algorithms Unlocked"></label><label>Author<input id="labAuthor" maxlength="120" placeholder="e.g. T. Cormen"></label><button class="button button-primary" id="labInsert">Insert sample node</button><button class="button button-secondary" id="labSearch">Search tree</button><button class="button button-danger" id="labDelete">Delete title</button></div>
+            <div class="tree-legend"><span><i class="legend-root"></i>Root</span><span><i class="legend-path"></i>Search path</span><span><i class="legend-lab"></i>Temporary lab node</span></div>
+            <div class="tree-toolbar"><p>See every node at once. Click a node to read its book details; zoom in to inspect labels.</p><div class="tree-zoom-controls"><button type="button" class="icon-button" id="treeZoomOut" aria-label="Zoom out">−</button><button type="button" class="icon-button" id="treeFit" aria-label="Fit whole tree">Fit</button><button type="button" class="icon-button" id="treeZoomIn" aria-label="Zoom in">＋</button></div></div>
+            <div class="tree-viewport" id="treeViewport"><div id="treeCanvas" class="tree-canvas" role="group" aria-label="Interactive binary search tree"></div></div>
+            <div class="tree-node-detail" id="treeNodeDetail" aria-live="polite">Select a tree node to see its title, author, and left/right children.</div>
+            <div class="operation-note" id="treeMessage" aria-live="polite">Ready. Choose an operation to explore the tree.</div>
+            <div class="traversal-lab"><div class="panel-heading"><div><p class="eyebrow">CO4 · TREE TRAVERSALS</p><h2>Traversal lab</h2></div></div><p class="helper-copy">The full visit order appears immediately. Choose step-by-step only if you want to follow the highlighted nodes.</p><div class="button-row"><button class="button button-secondary traversal-button" data-order="inorder">Inorder <small>Left → Node → Right</small></button><button class="button button-secondary traversal-button" data-order="preorder">Preorder <small>Node → Left → Right</small></button><button class="button button-secondary traversal-button" data-order="postorder">Postorder <small>Left → Right → Node</small></button></div><div class="traversal-controls"><p id="traversalExplanation" class="traversal-explanation">Choose a traversal. Its complete result will show without waiting for the animation.</p><div><span id="traversalProgress" aria-live="polite"></span><button type="button" class="text-button" id="playTraversal" disabled>▶ Play step-by-step</button><button type="button" class="text-button" id="skipTraversal" hidden>Show all now</button></div></div><ol id="traversalOutput" class="traversal-output"></ol></div>
+          </article>
+        </section>
+
+        <section class="view-section" id="search-lab" data-title="Search Lab">
+          <div class="welcome-row"><div><p class="eyebrow">ALGORITHM LAB · CO3</p><h1>Compare the <span>search paths.</span></h1><p class="page-subtitle">Same target, same books. Compare linear search with a title-keyed BST.</p></div><span class="pill violet-pill">APPROXIMATE TIMINGS</span></div>
+          <article class="panel search-lab-panel"><div class="search-lab-form"><label for="algorithmTarget">Target book title</label><div class="search-form-row"><input id="algorithmTarget" placeholder="Try “Clean Code”"><button class="button button-primary" id="compareSearch">Compare algorithms</button></div><p class="helper-copy">Wall-clock timings are approximate and affected by system load. Comparison counts are the more useful classroom metric.</p></div><div id="comparisonResult" class="comparison-result"><div class="empty-state"><span class="empty-icon">⌕</span><strong>Ready to compare</strong><p>Enter a title to compare the actual search paths and comparison counts.</p></div></div></article>
+          <div class="concept-grid"><article class="panel concept-card"><span class="concept-symbol violet">01</span><h3>Linear search</h3><p>Checks one book at a time in collection order until it finds a match.</p><div class="complexity"><span>Worst case</span><strong>O(n)</strong></div></article><article class="panel concept-card"><span class="concept-symbol mint">02</span><h3>BST search</h3><p>Uses alphabetical comparisons to choose a left or right branch.</p><div class="complexity"><span>Actual tree</span><strong>O(h)</strong></div></article></div>
+          <article class="panel note-panel"><span class="note-icon">i</span><p>A BST is not automatically balanced. A balanced tree can search in O(log n), while a skewed tree can take O(n). TreeLib builds a normal BST in database insertion order and reports its real height—so BST search is not always faster.</p></article>
+        </section>
+
+        <section class="view-section" id="analytics" data-title="Analytics">
+          <div class="welcome-row"><div><p class="eyebrow">INSIGHTS & CONCEPTS</p><h1>Understand the <span>structure.</span></h1><p class="page-subtitle">A guided tour of the algorithms running inside TreeLib.</p></div></div>
+          <div class="learning-grid">
+            <article class="panel learning-card"><span class="learn-index">01</span><h2>What is a BST?</h2><p>A Binary Search Tree is a node-based structure where each node's left descendants compare smaller and its right descendants compare larger by key.</p></article>
+            <article class="panel learning-card"><span class="learn-index">02</span><h2>How insertion works</h2><p>Start at the root. Compare the new title; move left if smaller or right if larger. Repeat until an empty child slot is found.</p><div class="algorithm-line">Average O(log n) · Worst O(n)</div></article>
+            <article class="panel learning-card"><span class="learn-index">03</span><h2>How search works</h2><p>Compare the target title at each visited node. Follow only the branch that could contain it; stop at a match or an empty link.</p><div class="algorithm-line">O(h) time · O(1) iterative space</div></article>
+            <article class="panel learning-card"><span class="learn-index">04</span><h2>How deletion works</h2><p>Remove a leaf directly. Replace a one-child node with its child. For two children, replace it with its inorder successor, then remove that successor.</p><div class="algorithm-line">O(h) time · O(h) recursive space</div></article>
+            <article class="panel learning-card"><span class="learn-index">05</span><h2>Height & leaf nodes</h2><p>Height counts nodes on the longest root-to-leaf path (empty tree height is 0). A leaf has no children. Tree height explains actual BST search cost.</p></article>
+            <article class="panel learning-card"><span class="learn-index">06</span><h2>Where trees are used</h2><p>Search indexes, ordered sets, syntax trees, routing decisions, and directory structures use tree-like ideas. Production indexes often use balanced variants.</p></article>
+          </div>
+          <article class="panel outcomes-panel"><div class="panel-heading"><div><p class="eyebrow">COURSE OUTCOMES</p><h2>CO mapping</h2></div></div><div class="outcome-row"><span>CO3</span><p>Compare algorithm behavior using measured search paths, comparison counts, and complexity.</p><a href="#search-lab" data-view="search-lab">Open Search Lab →</a></div><div class="outcome-row"><span>CO4</span><p>Implement BST insertion, search, deletion, and inorder, preorder, and postorder traversals.</p><a href="#visualizer" data-view="visualizer">Open BST Lab →</a></div><div class="outcome-row"><span>CO5</span><p>Optional separate graph demonstration: BFS and DFS operate on a graph, not on the BST.</p><div class="graph-controls"><button class="button button-secondary" id="graphBfs">Run BFS</button><button class="button button-secondary" id="graphDfs">Run DFS</button><span id="graphOutput" aria-live="polite">A—B, A—C, B—D, B—E, C—F</span></div></div></article>
+        </section>
+
+        <section class="view-section" id="about" data-title="About Project">
+          <div class="welcome-row"><div><p class="eyebrow">PROJECT OVERVIEW</p><h1>Learning meets <span>librarianship.</span></h1><p class="page-subtitle">A demonstration library management system powered by a genuine Binary Search Tree.</p></div></div>
+          <article class="panel about-hero"><span class="about-mark">TL</span><div><p class="eyebrow">TREE LIB · SMART LIBRARY MANAGEMENT</p><h2>Project abstract</h2><p>TreeLib combines everyday book catalog operations with an interactive exploration of Binary Search Trees. A Flask application validates and serves library data stored in SQLite; an actual BST is inserted from database-ID order to support title lookup, traversals, and learning demonstrations.</p></div></article>
+          <div class="learning-grid about-grid"><article class="panel learning-card"><h2>Problem statement</h2><p>Basic library records are easy to store, but opaque data structures make it difficult to see how searching and ordering algorithms behave on real records.</p></article><article class="panel learning-card"><h2>Project objectives</h2><p>Provide reliable CRUD and issue/return flows, visualize true BST structure, compare algorithms honestly, and make core tree concepts easy to demonstrate.</p></article><article class="panel learning-card"><h2>Technology stack</h2><p>Python 3.13 · Flask · SQLite · HTML · CSS · JavaScript · Chart.js (dashboard visualizations).</p></article><article class="panel learning-card"><h2>Architecture</h2><p>Browser interface → Flask JSON API → SQLite books and activity tables. The server builds a title-keyed BST in persistent book-ID insertion order for tree/search/traversal requests.</p></article></div>
+          <article class="panel presentation-panel"><div><p class="eyebrow">PRESENTATION MODE</p><h2>A five-minute demo plan</h2><p>Use “Try demo” for sample data without changing your database. The sample contains five books, four available and one issued.</p></div><ol><li><strong>0:00–0:45</strong><span>Introduce the problem and dashboard metrics.</span></li><li><strong>0:45–1:30</strong><span>Add or edit a book, then issue and return it.</span></li><li><strong>1:30–2:30</strong><span>Show the database-insertion-order BST; search, insert a temporary node, then delete it.</span></li><li><strong>2:30–3:30</strong><span>Run inorder, preorder, and postorder traversals.</span></li><li><strong>3:30–4:30</strong><span>Compare linear and BST searches; discuss actual comparisons and tree height.</span></li><li><strong>4:30–5:00</strong><span>Explain average/worst-case behavior and the CO3/CO4/CO5 mapping.</span></li></ol><button class="button button-primary" id="startDemo">Load sample demo</button></article>
+        </section>
+      </main>
+      <footer class="app-footer"><span>TreeLib <span>·</span> Learning data structures through real library operations</span><span>Flask <i></i> SQLite <i></i> Binary Search Tree</span></footer>
+    </div>
+  </div>
+
+  <dialog id="bookDialog" class="book-dialog" aria-labelledby="bookDialogTitle">
+    <form id="bookForm" novalidate>
+      <div class="dialog-heading"><div><p class="eyebrow">LIBRARY CATALOG</p><h2 id="bookDialogTitle">Add a book</h2></div><button type="button" class="icon-button" id="closeDialog" aria-label="Close dialog">×</button></div>
+      <input type="hidden" id="bookId">
+      <label for="bookTitle">Title <span>*</span></label><input id="bookTitle" name="title" maxlength="160" required placeholder="Book title">
+      <label for="bookAuthor">Author <span>*</span></label><input id="bookAuthor" name="author" maxlength="120" required placeholder="Author name">
+      <label for="bookCategory">Category <span>*</span></label><input id="bookCategory" name="category" maxlength="80" required list="categoryOptions" placeholder="e.g. Technology"><datalist id="categoryOptions"></datalist>
+      <p class="form-hint">A duplicate title and author combination is not allowed.</p>
+      <div class="dialog-actions"><button type="button" class="button button-secondary" id="cancelDialog">Cancel</button><button type="submit" class="button button-primary" id="saveBook">Save book</button></div>
+    </form>
+  </dialog>
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <div class="confirm-overlay" id="confirmOverlay" hidden><div class="confirm-dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmMessage"><span class="confirm-symbol">!</span><h2 id="confirmTitle">Delete this book?</h2><p id="confirmMessage">This action cannot be undone.</p><div class="dialog-actions"><button class="button button-secondary" id="confirmCancel">Cancel</button><button class="button button-danger" id="confirmDelete">Delete book</button></div></div></div>
+</body>
+</html>
